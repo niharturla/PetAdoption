@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Center - Reports & Statistics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Pet Adoption Center</h1>
+            <nav>
+                <a href="index.html">Application Management</a>
+                <a href="dogs.html">Dog Management</a>
+                <a href="adopters.html">Adopter Management</a>
+                <a href="reports.html" class="active">Reports & Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="filter-section">
+                <h2>Filter Applications</h2>
+                <p class="description">Select filters to generate a report with statistics. All dropdowns are dynamically populated from the database.</p>
+                
+                <form id="filterForm">
+                    <div class="filter-grid">
+                        <div class="form-group">
+                            <label for="filterStatus">Status</label>
+                            <select id="filterStatus">
+                                <option value="">All Statuses</option>
+                                <option value="Submitted">Submitted</option>
+                                <option value="In Review">In Review</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filterDog">Dog</label>
+                            <select id="filterDog">
+                                <option value="">All Dogs</option>
+                            </select>
+                            <small class="help-text">Dynamically loaded from database</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="filterAdopter">Adopter</label>
+                            <select id="filterAdopter">
+                                <option value="">All Adopters</option>
+                            </select>
+                            
+                            <small class="help-text">Dynamically loaded from database</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="startDate">Start Date</label>
+                            <input type="date" id="startDate" />
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">End Date</label>
+                            <input type="date" id="endDate" />
+                        </div>
+
+                        <label>
+                            <input type="checkbox" id="filterAvailableDogs" />
+                            Include Dogs Not Yet Adopted
+                        </label>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit">Generate Report</button>
+                        <button type="button" onclick="clearFilters()">Clear Filters</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="stats-section" id="statsSection" style="display: none;">
+                <h2>Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotal">0</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                   
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAcceptanceRate">0%</div>
+                        <div class="stat-label">Acceptance Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAvgPerDog">0</div>
+                        <div class="stat-label">Avg Applications per Dog</div>
+                    </div>
+                </div>
+
+                <div class="status-breakdown">
+                    <h3>Status Breakdown</h3>
+                    <div class="status-list">
+                        <div class="status-item">
+                            <span class="status-badge submitted">Submitted</span>
+                            <span id="countSubmitted">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge in-review">In Review</span>
+                            <span id="countInReview">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge approved">Approved</span>
+                            <span id="countApproved">0</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-badge rejected">Rejected</span>
+                            <span id="countRejected">0</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <h2>Filtered Applications</h2>
+                <div class="table-container">
+                    <table id="reportTable">
+                        <thead>
+                            <tr>
+                                <th>Dog Name</th>
+                                <th>Breed</th>
+                                <th>Adopter Name</th>
+                                <th>Adopter Phone</th>
+                                <th>Status</th>
+                                <th>Submitted Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="reportTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">Apply filters to generate report...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="reports.js"></script>
+</body>
+</html>
+

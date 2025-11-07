@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Center - Application Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Pet Adoption Center</h1>
+            <nav>
+                <a href="index.html" class="active">Application Management</a>
+                <a href="dogs.html">Dog Management</a>
+                <a href="adopters.html">Adopter Management</a>
+                <a href="reports.html">Reports & Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Adoption Application Management</h2>
+                <p class="description">Add, edit, and delete adoption applications. Select dogs and adopters from the database.</p>
+                
+                <form id="applicationForm">
+                    <input type="hidden" id="applicationId" />
+                    
+                    <div class="form-group">
+                        <label for="dogSelect">Select Dog *</label>
+                        <select id="dogSelect" required>
+                            <option value="">Loading dogs...</option>
+                        </select>
+                        <small class="help-text">Dynamically loaded from database</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adopterSelect">Select Adopter *</label>
+                        <select id="adopterSelect" required>
+                            <option value="">Loading adopters...</option>
+                        </select>
+                        <small class="help-text">Dynamically loaded from database</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="statusSelect">Status *</label>
+                        <select id="statusSelect" required>
+                            <option value="Submitted">Submitted</option>
+                            <option value="In Review">In Review</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submitBtn">Add Application</button>
+                        <button type="button" id="cancelBtn" style="display: none;" onclick="resetForm()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="table-section">
+                <h2>All Applications</h2>
+                <div class="table-container">
+                    <table id="applicationsTable">
+                        <thead>
+                            <tr>
+                                <th>Dog Name</th>
+                                <th>Breed</th>
+                                <th>Adopter Name</th>
+                                <th>Adopter Phone</th>
+                                <th>Status</th>
+                                <th>Submitted Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="applicationsTableBody">
+                            <tr>
+                                <td colspan="7" class="loading">Loading applications...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+

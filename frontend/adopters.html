@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Center - Adopter Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Pet Adoption Center</h1>
+            <nav>
+                <a href="index.html">Application Management</a>
+                <a href="dogs.html">Dog Management</a>
+                <a href="adopters.html" class="active">Adopter Management</a>
+                <a href="reports.html">Reports & Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="form-section">
+                <h2>Adopter Management</h2>
+                <p class="description">Add, edit, and delete adopters. Manage adopter information and their relationships with dogs.</p>
+                
+                <form id="adopterForm">
+                    <input type="hidden" id="adopterId" />
+                    
+                    <div class="form-group">
+                        <label for="adopterName">Adopter Name *</label>
+                        <input type="text" id="adopterName" required placeholder="Enter adopter name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adopterPhone">Phone Number *</label>
+                        <input type="text" id="adopterPhone" required placeholder="Enter phone number" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adopterHomeType">Home Type *</label>
+                        <select id="adopterHomeType" required>
+                            <option value="">Select home type...</option>
+                            <option value="Apartment">Apartment</option>
+                            <option value="House">House</option>
+                            <option value="Townhouse">Townhouse</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="adopterExperience">Experience</label>
+                        <textarea id="adopterExperience" rows="3" placeholder="Enter previous pet ownership experience (optional)"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submitBtn">Add Adopter</button>
+                        <button type="button" id="cancelBtn" style="display: none;" onclick="resetForm()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="table-section">
+                <h2>All Adopters</h2>
+                <div class="table-container">
+                    <table id="adoptersTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Phone</th>
+                                <th>Home Type</th>
+                                <th>Experience</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adoptersTableBody">
+                            <tr>
+                                <td colspan="5" class="loading">Loading adopters...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="adopters.js"></script>
+</body>
+</html>
+

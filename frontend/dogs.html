@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Center - Dog Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Pet Adoption Center</h1>
+            <nav>
+                <a href="index.html">Application Management</a>
+                <a href="dogs.html" class="active">Dog Management</a>
+                <a href="adopters.html">Adopter Management</a>
+                <a href="reports.html">Reports & Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Dog Form -->
+            <section class="form-section">
+                <h2>Dog Management</h2>
+                <p class="description">Add, edit, and delete dogs available for adoption.</p>
+                
+                <form id="dogForm">
+                    <input type="hidden" id="dogId" />
+                    
+                    <div class="form-group">
+                        <label for="dogName">Dog Name *</label>
+                        <input type="text" id="dogName" required placeholder="Enter dog name" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dogBreed">Breed *</label>
+                        <input type="text" id="dogBreed" required placeholder="Enter breed" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dogAge">Age *</label>
+                        <input type="number" id="dogAge" required min="0" placeholder="Enter age" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dogStatus">Status *</label>
+                        <select id="dogStatus" required>
+                            <option value="Available">Available</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Adopted">Adopted</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="availableTime">Available Time (Days) *</label>
+                        <input type="number" id="availableTime" required min="1" placeholder="Enter days until status changes to Pending" />
+                        <small class="help-text">After this time, dog status will automatically change to "Pending"</small>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="submitBtn">Add Dog</button>
+                        <button type="button" id="cancelBtn" style="display: none;" onclick="resetForm()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Medical Records Form -->
+            <section class="form-section" id="medicalRecordSection" style="display: none;">
+                <h2>Add Medical Record</h2>
+                <p class="description">Add medical records for the selected dog.</p>
+                
+                <form id="medicalRecordForm">
+                    <input type="hidden" id="medicalRecordDogId" />
+                    <input type="hidden" id="medicalRecordId" />
+                    
+                    <div class="form-group">
+                        <label for="medicalDescription">Description *</label>
+                        <textarea id="medicalDescription" required rows="3" placeholder="Enter treatment/checkup description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicalTreatmentDate">Treatment Date *</label>
+                        <input type="date" id="medicalTreatmentDate" required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicalVetName">Veterinarian Name</label>
+                        <input type="text" id="medicalVetName" placeholder="Enter veterinarian name (optional)" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="medicalNotes">Notes</label>
+                        <textarea id="medicalNotes" rows="3" placeholder="Additional notes (optional)"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" id="medicalSubmitBtn">Add Medical Record</button>
+                        <button type="button" id="medicalCancelBtn" onclick="closeMedicalForm()">Cancel</button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Filters -->
+            <section class="table-section">
+                <h2>All Dogs</h2>
+
+                <div class="filters">
+                    <input type="text" id="filterBreed" placeholder="Filter by breed" />
+                    <input type="number" id="filterMinAge" placeholder="Min Age" min="0" />
+                    <input type="number" id="filterMaxAge" placeholder="Max Age" min="0" />
+                    <select id="filterStatus">
+                        <option value="">All Statuses</option>
+                        <option value="Available">Available</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Adopted">Adopted</option>
+                    </select>
+                    <button id="applyFilters">Apply Filters</button>
+                    <button id="clearFilters">Clear Filters</button>
+                </div>
+
+                <div class="table-container">
+                    <table id="dogsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Breed</th>
+                                <th>Age</th>
+                                <th>Status</th>
+                                <th>Time Remaining</th>
+                                <th>Intake Date</th>
+                                <th>Medical Records</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dogsTableBody">
+                            <tr>
+                                <td colspan="8" class="loading">Loading dogs...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="dogs.js"></script>
+</body>
+</html>
