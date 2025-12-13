@@ -49,14 +49,17 @@ function formatCountdown(availableUntil) {
     }
 }
 
-// Calculate availableTime from availableUntil (for editing)
-function getAvailableTimeFromDate(availableUntil) {
-    if (!availableUntil) return 30; // default
-    const now = new Date();
-    const until = new Date(availableUntil);
-    const diff = until - now;
-    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    return days > 0 ? days : 30;
+// Format availableUntil date for datetime-local input (for editing)
+function formatDateForInput(availableUntil) {
+    if (!availableUntil) return '';
+    const date = new Date(availableUntil);
+    // Format: YYYY-MM-DDTHH:mm
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    return `${year}-${month}-${day}T${hours}:${minutes}`;
 }
 
 // Render dogs in table
@@ -83,7 +86,7 @@ function renderDogs(dogs) {
             </td>
             <td>
                 <div class="action-buttons">
-                    <button class="btn-edit" onclick="editDog('${dog._id}', '${escapeHtml(dog.name)}', '${escapeHtml(dog.breed)}', ${dog.age}, '${dog.status || 'Available'}', ${getAvailableTimeFromDate(dog.availableUntil)})">Edit</button>
+                    <button class="btn-edit" onclick="editDog('${dog._id}', '${escapeHtml(dog.name)}', '${escapeHtml(dog.breed)}', ${dog.age}, '${dog.status || 'Available'}', '${dog.availableUntil || ''}')">Edit</button>
                     <button class="btn-delete" onclick="deleteDog('${dog._id}')">Delete</button>
                 </div>
             </td>
@@ -179,13 +182,15 @@ document.getElementById('dogForm').addEventListener('submit', async (e) => {
     const name = document.getElementById('dogName').value.trim();
     const breed = document.getElementById('dogBreed').value.trim();
     const age = parseInt(document.getElementById('dogAge').value);
-    const status = document.getElementById('dogStatus').value;
-    const availableTime = parseInt(document.getElementById('availableTime').value);
+    const readyForReview = document.getElementById('readyForReview').value;
     
-    if (!name || !breed || isNaN(age) || age < 0 || isNaN(availableTime) || availableTime < 1) {
-        showMessage('Please fill in all fields correctly. Age must be 0 or greater, and Available Time must be at least 1 day.', 'error');
+    if (!name || !breed || isNaN(age) || age < 0 || !readyForReview) {
+        showMessage('Please fill in all fields correctly. Age must be 0 or greater, and Ready for Review date/time is required.', 'error');
         return;
     }
+    
+    // Convert datetime-local to ISO string for backend
+    const readyForReviewDate = new Date(readyForReview).toISOString();
     
     try {
         let response;
@@ -194,14 +199,14 @@ document.getElementById('dogForm').addEventListener('submit', async (e) => {
             response = await fetch(`${API_BASE_URL}/dogs/updateDog/${dogId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, breed, age, status, availableTime })
+                body: JSON.stringify({ name, breed, age, availableUntil: readyForReviewDate })
             });
         } else {
             // Add dog
             response = await fetch(`${API_BASE_URL}/dogs/addDog`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, breed, age, availableTime })
+                body: JSON.stringify({ name, breed, age, availableUntil: readyForReviewDate })
             });
         }
 
@@ -221,13 +226,13 @@ document.getElementById('dogForm').addEventListener('submit', async (e) => {
 });
 
 // Edit dog
-function editDog(id, name, breed, age, status, availableTime) {
+function editDog(id, name, breed, age, status, availableUntil) {
     document.getElementById('dogId').value = id;
     document.getElementById('dogName').value = name;
     document.getElementById('dogBreed').value = breed;
     document.getElementById('dogAge').value = age;
     document.getElementById('dogStatus').value = status;
-    document.getElementById('availableTime').value = availableTime || 30;
+    document.getElementById('readyForReview').value = formatDateForInput(availableUntil);
     document.getElementById('submitBtn').textContent = 'Update Dog';
     document.getElementById('cancelBtn').style.display = 'inline-block';
     document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
@@ -238,9 +243,21 @@ async function deleteDog(id) {
     if (!confirm('Are you sure you want to delete this dog?')) return;
     
     try {
+        const deletedRecord = await fetch(`${API_BASE_URL}/dogs/deleteRecords/${id}`, {method: 'DELETE'});
+        const deletedDog = await fetch(`${API_BASE_URL}/dogs/deleteApps/${id}`, {method: 'DELETE'} );
         const response = await fetch(`${API_BASE_URL}/dogs/deleteDog/${id}`, { method: 'DELETE' });
         if (response.ok) {
             showMessage('Dog deleted successfully!', 'success');
+            // delete the applications with the dog
+            // delete application id not dog id
+            //const deletedDog = await fetch(`${API_BASE_URL}/dogs/deleteApps/${id}`, {method: 'DELETE'} );
+            if (deletedDog) {
+                showMessage('All applications related to the dog are delete', 'success');
+            }
+
+            if (deletedRecord) {
+                showMessage('All medical records related to the dog are deleted', 'success');
+            }
             loadDogs();
         } else {
             const error = await response.json();

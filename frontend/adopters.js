@@ -119,9 +119,8 @@ function editAdopter(id, name, phone, homeType, experience) {
 
 // Delete adopter
 async function deleteAdopter(id) {
-    if (!confirm('Are you sure you want to delete this adopter? This action cannot be undone.')) {
-        return;
-    }
+    confirm('Are you sure you want to delete this adopter? This action cannot be undone.')
+   
     
     try {
         const response = await fetch(`${API_BASE_URL}/adopters/${id}`, {

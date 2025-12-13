@@ -1,5 +1,5 @@
 import express from "express";
-import MedicalRecord from "../models/recordModel.js";
+import {MedicalRecords} from "../models/recordModel.js";
 import { Dog } from "../models/DogModel.js";
 
 const router = express.Router();
@@ -17,7 +17,7 @@ router.post("/add", async (req, res) => {
     const dog = await Dog.findById(dog_id);
     if (!dog) return res.status(404).json({ error: "Dog not found." });
 
-    const record = new MedicalRecord({
+    const record = new MedicalRecords({
       dog_id: dog_id,
       description,
       treatment_date: treatment_date || Date.now(),
@@ -39,7 +39,7 @@ router.get("/", async (req, res) => {
     const filter = {};
     if (dog_id) filter.dog_id = dog_id;
     
-    const records = await MedicalRecord.find(filter).populate("dog_id").sort({ treatment_date: -1 });
+    const records = await MedicalRecords.find(filter).populate("dog_id").sort({ treatment_date: -1 });
     res.status(200).json(records);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -49,7 +49,7 @@ router.get("/", async (req, res) => {
 // ✅ Get single record by ID
 router.get("/:id", async (req, res) => {
   try {
-    const record = await MedicalRecord.findById(req.params.id).populate("dog_id");
+    const record = await MedicalRecords.findById(req.params.id).populate("dog_id");
 
     if (!record) return res.status(404).json({ error: "Medical record not found." });
 
@@ -64,7 +64,7 @@ router.put("/:id", async (req, res) => {
   try {
     const { dog_id, description, treatment_date, vet_name, notes } = req.body;
 
-    const updatedRecord = await MedicalRecord.findByIdAndUpdate(
+    const updatedRecord = await MedicalRecords.findByIdAndUpdate(
       req.params.id,
       { dog_id: dog_id, description, treatment_date, vet_name, notes },
       { new: true, runValidators: true }
@@ -81,7 +81,7 @@ router.put("/:id", async (req, res) => {
 // ✅ Delete medical record
 router.delete("/:id", async (req, res) => {
   try {
-    const deletedRecord = await MedicalRecord.findByIdAndDelete(req.params.id);
+    const deletedRecord = await MedicalRecords.findByIdAndDelete(req.params.id);
 
     if (!deletedRecord) return res.status(404).json({ error: "Medical record not found." });
 

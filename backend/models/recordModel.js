@@ -36,4 +36,17 @@ const medicalRecordsSchema = mongoose.Schema({
 
 });
 
-export default mongoose.model("MedicalRecord", medicalRecordsSchema);
+// Indexes for efficient querying
+// Index on dog_id for finding all medical records for a specific dog (used in medical record queries)
+medicalRecordsSchema.index({ dog_id: 1 });
+
+// Index on treatment_date for date range queries and sorting (used in medical record filters)
+medicalRecordsSchema.index({ treatment_date: -1 });
+
+// Index on vet_name for filtering by veterinarian (used in filter routes)
+medicalRecordsSchema.index({ vet_name: 1 });
+
+// Compound index for dog_id and treatment_date (used in queries that filter by both dog and date range)
+medicalRecordsSchema.index({ dog_id: 1, treatment_date: -1 });
+
+export const MedicalRecords = mongoose.model("MedicalRecord", medicalRecordsSchema)

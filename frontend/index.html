@@ -15,6 +15,7 @@
                 <a href="dogs.html">Dog Management</a>
                 <a href="adopters.html">Adopter Management</a>
                 <a href="reports.html">Reports & Statistics</a>
+                <a href="dashboard.html">Dashboard</a>
             </nav>
         </header>
 
@@ -42,16 +43,6 @@
                         <small class="help-text">Dynamically loaded from database</small>
                     </div>
 
-                    <div class="form-group">
-                        <label for="statusSelect">Status *</label>
-                        <select id="statusSelect" required>
-                            <option value="Submitted">Submitted</option>
-                            <option value="In Review">In Review</option>
-                            <option value="Approved">Approved</option>
-                            <option value="Rejected">Rejected</option>
-                        </select>
-                    </div>
-
                     <div class="form-actions">
                         <button type="submit" id="submitBtn">Add Application</button>
                         <button type="button" id="cancelBtn" style="display: none;" onclick="resetForm()">Cancel</button>
@@ -61,6 +52,7 @@
 
             <section class="table-section">
                 <h2>All Applications</h2>
+                <p class="description">Active applications for dogs that haven't found homes yet.</p>
                 <div class="table-container">
                     <table id="applicationsTable">
                         <thead>
@@ -77,6 +69,30 @@
                         <tbody id="applicationsTableBody">
                             <tr>
                                 <td colspan="7" class="loading">Loading applications...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="table-section">
+                <h2>Dogs That Found Homes</h2>
+                <p class="description">Recent dogs that have been successfully adopted (showing last 50).</p>
+                <div class="table-container">
+                    <table id="adoptedDogsTable">
+                        <thead>
+                            <tr>
+                                <th>Dog Name</th>
+                                <th>Breed</th>
+                                <th>Age</th>
+                                <th>Adopter Name</th>
+                                <th>Adopter Phone</th>
+                                <th>Adopted Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="adoptedDogsTableBody">
+                            <tr>
+                                <td colspan="6" class="loading">Loading adopted dogs...</td>
                             </tr>
                         </tbody>
                     </table>

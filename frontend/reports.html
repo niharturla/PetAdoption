@@ -15,6 +15,7 @@
                 <a href="dogs.html">Dog Management</a>
                 <a href="adopters.html">Adopter Management</a>
                 <a href="reports.html" class="active">Reports & Statistics</a>
+                <a href="dashboard.html">Dashboard</a>
             </nav>
         </header>
 
@@ -49,7 +50,6 @@
                             <select id="filterAdopter">
                                 <option value="">All Adopters</option>
                             </select>
-                            
                             <small class="help-text">Dynamically loaded from database</small>
                         </div>
 
@@ -63,10 +63,7 @@
                             <input type="date" id="endDate" />
                         </div>
 
-                        <label>
-                            <input type="checkbox" id="filterAvailableDogs" />
-                            Include Dogs Not Yet Adopted
-                        </label>
+                        
                     </div>
 
                     <div class="form-actions">
@@ -83,10 +80,9 @@
                         <div class="stat-value" id="statTotal">0</div>
                         <div class="stat-label">Total Applications</div>
                     </div>
-                   
                     <div class="stat-card">
                         <div class="stat-value" id="statAcceptanceRate">0%</div>
-                        <div class="stat-label">Acceptance Rate</div>
+                        <div class="stat-label">Adopted Rate</div>
                     </div>
                     <div class="stat-card">
                         <div class="stat-value" id="statAvgPerDog">0</div>
@@ -147,4 +143,3 @@
     <script src="reports.js"></script>
 </body>
 </html>
-

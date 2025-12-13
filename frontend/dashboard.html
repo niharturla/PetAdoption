@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Center - Dashboard & Statistics</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🐾 Pet Adoption Center</h1>
+            <nav>
+                <a href="index.html">Application Management</a>
+                <a href="dogs.html">Dog Management</a>
+                <a href="adopters.html">Adopter Management</a>
+                <a href="reports.html">Reports & Statistics</a>
+                <a href="dashboard.html" class="active">Adopted Dogs Statistics</a>
+            </nav>
+        </header>
+
+        <main>
+            <section class="table-section">
+                <h2>Adopted Dogs Statistics (Latest 25)</h2>
+                <p class="description">Application statistics for the most recently adopted dogs.</p>
+                <div class="table-container">
+                    <table id="dogStatsTable">
+                        <thead>
+                            <tr>
+                                <th>Dog Name</th>
+                                <th>Breed</th>
+                                <th>Total Applications</th>
+                                <th>Owner</th>
+                                <th>Intake Date & Time</th>
+                                <th>Adopted Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dogStatsTableBody">
+                            <tr>
+                                <td colspan="7" class="loading">Loading dog statistics...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="stats-section">
+                <h2>Adoption Statistics Dashboard</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTotalAdopted">0</div>
+                        <div class="stat-label">Total Adopted Dogs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statIntakeDate">-</div>
+                        <div class="stat-label">Intake Date & Time</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statMostBreed">-</div>
+                        <div class="stat-label">Most-Adopted Breed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statTopAdopter">-</div>
+                        <div class="stat-label">Top Adopter</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statAvgApps">0</div>
+                        <div class="stat-label">Avg Applications per Adopted Dog</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statFastest">-</div>
+                        <div class="stat-label">Fastest Adoption</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="statSlowest">-</div>
+                        <div class="stat-label">Slowest Adoption</div>
+                    </div>
+                </div>
+
+                <div class="adoption-details" id="adoptionDetails" style="display: none;">
+                    <h3>Adoption Details</h3>
+                    <div class="detail-item">
+                        <strong>Top Adopter:</strong> <span id="topAdopterName">-</span> (<span id="topAdopterCount">0</span> dogs)
+                    </div>
+                    <div class="detail-item">
+                        <strong>Fastest Adoption:</strong> <span id="fastestDogName">-</span> (<span id="fastestDays">0</span> days)
+                    </div>
+                    <div class="detail-item">
+                        <strong>Slowest Adoption:</strong> <span id="slowestDogName">-</span> (<span id="slowestDays">0</span> days)
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
+

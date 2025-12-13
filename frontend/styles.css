@@ -442,6 +442,33 @@ tbody tr:hover {
     color: #333;
 }
 
+.adoption-details {
+    margin-top: 30px;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.adoption-details h3 {
+    margin-bottom: 15px;
+    color: #667eea;
+}
+
+.detail-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+.detail-item strong {
+    color: #667eea;
+    margin-right: 10px;
+}
+
 @media (max-width: 768px) {
     .filter-grid {
         grid-template-columns: 1fr;

@@ -15,6 +15,7 @@
                 <a href="dogs.html" class="active">Dog Management</a>
                 <a href="adopters.html">Adopter Management</a>
                 <a href="reports.html">Reports & Statistics</a>
+                <a href="dashboard.html">Dashboard</a>
             </nav>
         </header>
 
@@ -43,18 +44,9 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="dogStatus">Status *</label>
-                        <select id="dogStatus" required>
-                            <option value="Available">Available</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Adopted">Adopted</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="availableTime">Available Time (Days) *</label>
-                        <input type="number" id="availableTime" required min="1" placeholder="Enter days until status changes to Pending" />
-                        <small class="help-text">After this time, dog status will automatically change to "Pending"</small>
+                        <label for="readyForReview">Ready for Review Date & Time *</label>
+                        <input type="datetime-local" id="readyForReview" required />
+                        <small class="help-text">Date and time when the dog is ready for review (status will automatically change to "Pending" after this time)</small>
                     </div>
 
                     <div class="form-actions">
