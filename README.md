@@ -1,5 +1,7 @@
 # 🐾 Pet Adoption Center Backend
 
+Live URL: https://main.d2hlw0girgqm22.amplifyapp.com/
+
 ## Overview
 
 This is the backend for a **Pet Adoption Center** application built with **Node.js, Express, and MongoDB (MERN stack)**.
