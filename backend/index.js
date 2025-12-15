@@ -1,7 +1,4 @@
 import express from "express";
-import { mongoDBURL, PORT } from "./config.js";
-
-import mongoSanitize from "express-mongo-sanitize";
 import mongoose from "mongoose";
 import dogRoute from './routes/dogRoute.js';
 import adopterRoute from './routes/adopterRoute.js';
@@ -47,7 +44,6 @@ app.use((req, res, next) => {
 });
 
 app.get('/', (req,res) => {
-    console.log(req);
     return res.status(234).send('Welcome tutorial')
 });
 
@@ -57,12 +53,14 @@ app.use('/applications', applicationRoute);
 app.use('/records', medicalRoutes);
 app.use('/filters', filterRoutes);
 
+const PORT = process.env.PORT || 5555;
+
 mongoose    
     .connect(process.env.MONGO_URI)
     .then(() => {
         console.log(`App is connected to database`);
-        app.listen(process.env.PORT, () => {
-            console.log(`App is listening to port: ${process.env.PORT}`);
+        app.listen(PORT, () => {
+            console.log(`App is listening to port: ${PORT}`);
         })
     }).catch((error) => {
         console.log(error);
