@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5555';
+const API_BASE_URL = "https://petadoptionnew.onrender.com";
 
 // Load dogs and adopters for dropdowns
 async function loadDogs() {

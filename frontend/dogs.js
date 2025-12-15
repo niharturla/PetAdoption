@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:5555';
+const API_BASE_URL = "https://petadoptionnew.onrender.com";
 let allDogs = []; // store all dogs for filtering
 
 // Load all dogs
