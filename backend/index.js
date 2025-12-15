@@ -1,5 +1,6 @@
 import express from "express";
 import { mongoDBURL, PORT } from "./config.js";
+
 import mongoSanitize from "express-mongo-sanitize";
 import mongoose from "mongoose";
 import dogRoute from './routes/dogRoute.js';
@@ -57,11 +58,11 @@ app.use('/records', medicalRoutes);
 app.use('/filters', filterRoutes);
 
 mongoose    
-    .connect(mongoDBURL)
+    .connect(process.env.MONGO_URI)
     .then(() => {
         console.log(`App is connected to database`);
-        app.listen(PORT, () => {
-            console.log(`App is listening to port: ${PORT}`);
+        app.listen(process.env.PORT, () => {
+            console.log(`App is listening to port: ${process.env.PORT}`);
         })
     }).catch((error) => {
         console.log(error);
